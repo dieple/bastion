@@ -33,6 +33,8 @@ resource "aws_iam_role_policy" "bastion_role_policy" {
   policy = "${data.aws_iam_policy_document.bastion_policy_document.json}"
 }
 
+data "aws_region" "current" {}
+
 data "aws_iam_policy_document" "bastion_policy_document" {
   statement {
     actions = [
@@ -93,6 +95,7 @@ data "template_file" "bastion_init_script" {
     ssh_user        = "${var.ssh_user}"
     environment     = "${var.environment}"
     user_data       = "${join("\n", var.user_data)}"
+    region          = "${data.aws_region.current.name}"
   }
 }
 
@@ -207,7 +210,8 @@ resource "aws_autoscaling_group" "bastion_asg" {
   desired_capacity          = "${var.desired_capacity}"
   termination_policies      = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
   enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
-//  tags                      = "${var.tags}"
+
+  //  tags                      = "${var.tags}"
 
   lifecycle {
     create_before_destroy = true
