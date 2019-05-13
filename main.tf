@@ -207,7 +207,7 @@ resource "aws_autoscaling_group" "bastion_asg" {
   desired_capacity          = "${var.desired_capacity}"
   termination_policies      = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
   enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
-  tags                      = "${var.tags}"
+//  tags                      = "${var.tags}"
 
   lifecycle {
     create_before_destroy = true

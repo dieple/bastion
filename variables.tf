@@ -59,8 +59,6 @@ variable "vpc_id" {
   description = "VPC to use"
 }
 
-# Tags used by all taggable resources
-
 variable "environment" {
   description = "Environment, normally prod, staging, test or dev"
   type        = "string"
