@@ -91,7 +91,7 @@ data "template_file" "bastion_init_script" {
   vars {
     allocation_id   = "${aws_eip.bastion.id}"
     welcome_message = "${var.stage}"
-    publict_key     = "${var.public_key_data == "" ? data.local_file.public_key.content: var.public_key_data}"
+    public_key      = "${var.public_key_data == "" ? data.local_file.public_key.content: var.public_key_data}"
     ssh_user        = "${var.ssh_user}"
     environment     = "${var.environment}"
     user_data       = "${join("\n", var.user_data)}"
