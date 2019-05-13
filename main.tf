@@ -112,7 +112,7 @@ resource "aws_security_group" "allow_ssh_sg" {
   name        = "${module.label.id}-allow-ssh-sg"
   description = "Allow all SSH only inbound"
   vpc_id      = "${var.vpc_id}"
-  tags        = "${module.label.tags}"
+  tags        = "${var.tags}"
 
   ingress {
     from_port   = 22
@@ -195,12 +195,11 @@ resource "aws_launch_configuration" "as_conf" {
   user_data = "${data.template_file.bastion_init_script.rendered}"
 }
 
-
 resource "aws_autoscaling_group" "bastion_asg" {
-  name                 = "${module.label.id}-bastion"
-  vpc_zone_identifier  = ["${var.public_subnets}"]
-  health_check_type    = "EC2"
-  launch_configuration = "${aws_launch_configuration.as_conf.name}"
+  name                      = "${module.label.id}-bastion"
+  vpc_zone_identifier       = ["${var.public_subnets}"]
+  health_check_type         = "EC2"
+  launch_configuration      = "${aws_launch_configuration.as_conf.name}"
   max_size                  = "${var.max_size}"
   min_size                  = "${var.min_size}"
   default_cooldown          = "${var.cooldown}"
@@ -208,14 +207,12 @@ resource "aws_autoscaling_group" "bastion_asg" {
   desired_capacity          = "${var.desired_capacity}"
   termination_policies      = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
   enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
-  tags = "${module.label.tags}"
+  tags                      = "${var.tags}"
 
   lifecycle {
     create_before_destroy = true
   }
-
 }
-
 
 resource "aws_autoscaling_schedule" "scale_up" {
   autoscaling_group_name = "${aws_autoscaling_group.bastion_asg.name}"
@@ -234,4 +231,3 @@ resource "aws_autoscaling_schedule" "scale_down" {
   max_size               = "${var.max_size}"
   desired_capacity       = "${var.scale_down_desired_capacity}"
 }
-
