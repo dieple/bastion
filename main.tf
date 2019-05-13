@@ -136,47 +136,6 @@ resource "aws_security_group" "allow_ssh_sg" {
   }
 }
 
-//module "bastion_asg" {
-//  source = "git::https://github.com/cloudposse/terraform-aws-ec2-autoscale-group.git?ref=tags/0.1.3"
-//
-//  namespace                   = "${var.namespace}"
-//  stage                       = "${var.stage}"
-//  name                        = "${var.name}"
-//  delimiter                   = "${var.delimiter}"
-//  attributes                  = "${var.attributes}"
-//  tags                        = "${var.tags}"
-//  image_id                    = "${data.aws_ami.ami.id}"
-//  instance_type               = "${var.instance_type}"
-//  key_name                    = "${var.key_name}"
-//  security_groups_ids             = ["${aws_security_group.allow_ssh_sg.id}"]
-//  iam_instance_profilei_name        = "${aws_iam_instance_profile.bastion_instance_profile.name}"
-//  enable_monitoring           = true
-//  health_check_type           = "EC2"
-//  subnet_ids                  = "${var.public_subnets}"
-//  max_size                    = "${var.max_size}"
-//  min_size                    = "${var.min_size}"
-//  wait_for_capacity_timeout   = "${var.wait_for_capacity_timeout}"
-////  associate_public_ip_address = true
-//  default_cooldown            = "${var.cooldown}"
-//  health_check_grace_period   = "${var.health_check_grace_period }"
-//  termination_policies        = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
-//  enabled_metrics             = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
-//
-//  # Auto-scaling policies and CloudWatch metric alarms
-//  autoscaling_policies_enabled           = "true"
-//  cpu_utilization_high_threshold_percent = "${var.cpu_utilization_high_threshold_percent}"
-//  cpu_utilization_low_threshold_percent  = "${var.cpu_utilization_low_threshold_percent}"
-//
-//  block_device_mappings {
-//    ebs {
-//      volume_type = "gp2"
-//      volume_size = "${var.volume_size}"
-//    }
-//  }
-//
-//  user_data_base64 = "${base64encode(data.template_file.bastion_init_script.rendered)}"
-//}
-
 # Create the configuration for an ASG
 resource "aws_launch_configuration" "as_conf" {
   name                 = "${module.label.id}"
