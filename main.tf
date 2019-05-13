@@ -170,11 +170,21 @@ resource "aws_autoscaling_group" "bastion_asg" {
   desired_capacity          = "${var.desired_capacity}"
   termination_policies      = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
   enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
-  tags                      = "${var.asg_tags}"
+  tags                      = ["${data.null_data_source.tags_as_list_of_maps.*.outputs}"]
 
   lifecycle {
     create_before_destroy = true
   }
+}
+
+data "null_data_source" "tags_as_list_of_maps" {
+  count = "${length(keys(var.tags))}"
+
+  inputs = "${map(
+    "key", "${element(keys(var.tags), count.index)}",
+    "value", "${element(values(var.tags), count.index)}",
+    "propagate_at_launch", true
+  )}"
 }
 
 resource "aws_autoscaling_schedule" "scale_up" {
