@@ -1,34 +1,34 @@
-output "asg_id" {
-  value = "${module.bastion_asg.autoscaling_group_id}"
-}
-
-output "asg_arn" {
-  value = "${module.bastion_asg.autoscaling_group_arn}"
-}
-
-output "aws_security_group_allow_ssh_id" {
-  value = "${aws_security_group.allow_ssh_sg.id}"
-}
-
-output "autoscaling_group_desired_capacity" {
-  value = "${module.bastion_asg.autoscaling_group_desired_capacity}"
-}
-
-output "autoscaling_group_health_check_grace_period" {
-  value = "${module.bastion_asg.autoscaling_group_health_check_grace_period}"
-}
-
-output "autoscaling_group_name" {
-  value = "${module.bastion_asg.autoscaling_group_name}"
-}
-
-output "launch_template_arn" {
-  value = "${module.bastion_asg.launch_template_arn}"
-}
-
-output "launch_template_id" {
-  value = "${module.bastion_asg.launch_template_id}"
-}
+//output "asg_id" {
+//  value = "${module.bastion_asg.autoscaling_group_id}"
+//}
+//
+//output "asg_arn" {
+//  value = "${module.bastion_asg.autoscaling_group_arn}"
+//}
+//
+//output "aws_security_group_allow_ssh_id" {
+//  value = "${aws_security_group.allow_ssh_sg.id}"
+//}
+//
+//output "autoscaling_group_desired_capacity" {
+//  value = "${module.bastion_asg.autoscaling_group_desired_capacity}"
+//}
+//
+//output "autoscaling_group_health_check_grace_period" {
+//  value = "${module.bastion_asg.autoscaling_group_health_check_grace_period}"
+//}
+//
+//output "autoscaling_group_name" {
+//  value = "${module.bastion_asg.autoscaling_group_name}"
+//}
+//
+//output "launch_template_arn" {
+//  value = "${module.bastion_asg.launch_template_arn}"
+//}
+//
+//output "launch_template_id" {
+//  value = "${module.bastion_asg.launch_template_id}"
+//}
 
 output "ssh_user" {
   value       = "${var.ssh_user}"
