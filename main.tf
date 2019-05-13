@@ -172,7 +172,7 @@ module "bastion_asg" {
     }
   }
 
-  user_data = "${base64encode(data.template_file.bastion_init_script.rendered)}"
+  user_data_base64 = "${base64encode(data.template_file.bastion_init_script.rendered)}"
 }
 
 # Create the configuration for an ASG
