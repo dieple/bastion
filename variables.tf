@@ -95,7 +95,7 @@ variable "public_key_data" {
 
 variable "user_data" {
   type        = "string"
-  default     = ""
+  default     = []
   description = "User data content"
 }
 
