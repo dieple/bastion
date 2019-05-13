@@ -155,3 +155,7 @@ variable "cpu_utilization_low_threshold_percent" {
   default     = "20"
   description = "CPU utilization loq threshold"
 }
+
+variable "asg_tags" {
+  type = "list"
+}

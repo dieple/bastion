@@ -179,6 +179,7 @@ resource "aws_security_group" "allow_ssh_sg" {
 
 # Create the configuration for an ASG
 resource "aws_launch_configuration" "as_conf" {
+  name                 = "${module.label.id}"
   image_id             = "${data.aws_ami.ami.id}"
   instance_type        = "${var.instance_type}"
   key_name             = "${var.key_name}"
@@ -199,7 +200,7 @@ resource "aws_launch_configuration" "as_conf" {
 }
 
 resource "aws_autoscaling_group" "bastion_asg" {
-  name                      = "${module.label.id}-bastion"
+  name                      = "${module.label.id}-asg"
   vpc_zone_identifier       = ["${var.public_subnets}"]
   health_check_type         = "EC2"
   launch_configuration      = "${aws_launch_configuration.as_conf.name}"
@@ -210,8 +211,7 @@ resource "aws_autoscaling_group" "bastion_asg" {
   desired_capacity          = "${var.desired_capacity}"
   termination_policies      = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
   enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
-
-  //  tags                      = "${var.tags}"
+  tags                      = "${var.asg_tags}"
 
   lifecycle {
     create_before_destroy = true
